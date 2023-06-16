@@ -5,6 +5,7 @@ SSH_HOST=$2
 SSH_PORT=$3
 PATH_SOURCE=$4
 OWNER=$5
+CONTAINER_NAME=$6
 
 mkdir -p /root/.ssh
 ssh-keyscan -H "$SSH_HOST" >> /root/.ssh/known_hosts
@@ -47,11 +48,8 @@ then
 	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "sudo chmod 775 -R $PATH_SOURCE"
 	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "sudo chmod 777 -R $PATH_SOURCE/storage"
 	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "sudo chmod 777 -R $PATH_SOURCE/public"
-	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "cd $PATH_SOURCE && php artisan config:cache"
-	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "cd $PATH_SOURCE && php artisan route:cache"
-	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "cd $PATH_SOURCE && php artisan view:cache"
-	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "cd $PATH_SOURCE && php artisan event:cache"
-	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "cd $PATH_SOURCE && php artisan migrate"
+	ssh -i /root/.ssh/id_rsa -t $SSH_USER@$SSH_HOST "docker exec -it -w $PATH_SOURCE $CONTAINER_NAME php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan event:cache && php artisan migrate"
+
 
 	echo $'\n' "------ CONGRATS! DEPLOY SUCCESSFUL!!! ---------" $'\n'
 	exit 0
