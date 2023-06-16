@@ -1,6 +1,8 @@
 FROM alpine:3.11.3
 
-MAINTAINER Hoang Ngoc Quy <ngocquyhoang3112@gmail.com>
+LABEL Author="Hoang Ngoc Quy <ngocquyhoang3112@gmail.com>"
+LABEL Author2="Jose Monroy <jmonroy@develaps.mx>"
+
 
 RUN apk update \
 	&& apk upgrade \
