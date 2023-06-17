@@ -27,6 +27,8 @@ then
 	ssh-keyscan -p $SSH_PORT -H "$SSH_HOST" >> /root/.ssh/known_hosts
 fi
 
+echo $'\n' $DEPLOY_KEY  $'\n'
+
 rsync --progress -avzh \
 	--exclude='.git/' \
 	--exclude='.git*' \
