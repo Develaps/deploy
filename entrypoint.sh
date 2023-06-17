@@ -21,13 +21,17 @@ else
 	echo $'\n' "------ CONFIG SUCCESSFUL! ---------------------" $'\n'
 fi
 
+echo $'\n' "Aqui ya paso" $'\n'
+
+echo $'\n' $DEPLOY_KEY  $'\n'
+
 if [ ! -z "$SSH_PORT" ];
 then
         printf "Host %b\n\tPort %b\n" "$SSH_HOST" "$SSH_PORT" > /root/.ssh/config
 	ssh-keyscan -p $SSH_PORT -H "$SSH_HOST" >> /root/.ssh/known_hosts
 fi
 
-echo $'\n' $DEPLOY_KEY  $'\n'
+echo $'\n' "empieza comando" $'\n'
 
 rsync --progress -avzh \
 	--exclude='.git/' \
